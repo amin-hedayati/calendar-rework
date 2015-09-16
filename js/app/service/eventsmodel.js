@@ -26,7 +26,7 @@
 * Description: Required for Calendar Sharing.
 */
 
-app.factory('EventsModel', ['$rootScope', 'objectConverter', function ($rootScope, objectConverter) {
+app.factory('EventsModel', ['$rootScope', 'objectConverter', 'DialogModel', function ($rootScope, objectConverter, DialogModel) {
 	'use strict';
 
 	var EventsModel = function () {
@@ -369,6 +369,10 @@ app.factory('EventsModel', ['$rootScope', 'objectConverter', function ($rootScop
 			}
 
 			return (foundEvent) ? components.toString() : null;
+		},
+		initeventeditor: function (event, jsEvent, view, eventsobject) {
+			DialogModel.initbig('#events');
+			this.modalpropertyholder(event, jsEvent, view, eventsobject);
 		},
 		modalpropertyholder: function (event, jsEvent, view, jcalData) {
 			this.components = new ICAL.Component(jcalData);

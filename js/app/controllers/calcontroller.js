@@ -148,9 +148,8 @@ app.controller('CalController', ['$scope', '$rootScope', 'Restangular', 'Calenda
 				select: $scope.newEvent,
 				eventClick: function( event, jsEvent, view ) {
 					Restangular.one('calendars', event.calendarId).one('events', event.objectUri).get().then(function (eventsobject) {
-						DialogModel.initbig('#events');
-						DialogModel.open('#events');
-						EventsModel.modalpropertyholder(event, jsEvent, view, eventsobject);
+						EventsModel.initeventeditor(event, jsEvent, view, eventsobject, function () {
+						});
 					});
 					//EventsModel.putmodalproperties(event,jsEvent,view);
 				},

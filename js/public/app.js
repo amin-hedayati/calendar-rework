@@ -171,9 +171,8 @@ app.controller('CalController', ['$scope', '$rootScope', 'Restangular', 'Calenda
 				select: $scope.newEvent,
 				eventClick: function( event, jsEvent, view ) {
 					Restangular.one('calendars', event.calendarId).one('events', event.objectUri).get().then(function (eventsobject) {
-						DialogModel.initbig('#events');
-						DialogModel.open('#events');
-						EventsModel.modalpropertyholder(event, jsEvent, view, eventsobject);
+						EventsModel.initeventeditor(event, jsEvent, view, eventsobject, function () {
+						});
 					});
 					//EventsModel.putmodalproperties(event,jsEvent,view);
 				},
@@ -1422,7 +1421,7 @@ app.factory('DialogModel', function() {
 * Description: Required for Calendar Sharing.
 */
 
-app.factory('EventsModel', ['$rootScope', 'objectConverter', function ($rootScope, objectConverter) {
+app.factory('EventsModel', ['$rootScope', 'objectConverter', 'DialogModel', function ($rootScope, objectConverter, DialogModel) {
 	'use strict';
 
 	var EventsModel = function () {
@@ -1765,6 +1764,10 @@ app.factory('EventsModel', ['$rootScope', 'objectConverter', function ($rootScop
 			}
 
 			return (foundEvent) ? components.toString() : null;
+		},
+		initeventeditor: function (event, jsEvent, view, eventsobject) {
+			DialogModel.initbig('#events');
+			this.modalpropertyholder(event, jsEvent, view, eventsobject);
 		},
 		modalpropertyholder: function (event, jsEvent, view, jcalData) {
 			this.components = new ICAL.Component(jcalData);
